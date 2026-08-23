@@ -101,9 +101,219 @@
 
 
 ```
-# 
+# Prompt: Phase 7 — Final YouTube Production Audit
 ```
+Prompt: Phase 7 — Final YouTube Production Audit
 
+Di repository /root/music-player, lakukan final production audit untuk versi YouTube Music.
+
+TUJUAN:
+Memastikan versi YouTube benar-benar stabil ketika digunakan melalui browser nyata, mobile, desktop, dan jaringan berbeda.
+
+PENTING:
+- Jangan menambahkan fitur baru.
+- Jangan implement DirectProvider.
+- Jangan mengubah sumber katalog.
+- Jangan membuat direct audio stream YouTube.
+- Jangan bypass iklan/DRM.
+- Jangan menambahkan Telegram, storage, downloader, database, atau authentication.
+- YouTubeProvider tetap playback utama.
+- Perbaiki hanya bug nyata yang ditemukan dalam audit.
+
+1. BASELINE
+Pastikan:
+- git status bersih sebelum mulai
+- semua test Phase 6 masih PASS
+- server dapat dijalankan
+- endpoint utama tetap normal
+
+2. REAL BROWSER AUDIT
+
+Gunakan browser/HTTP verification yang tersedia untuk menguji:
+
+Desktop:
+- Chrome/Chromium
+- viewport normal desktop
+- search
+- play
+- pause
+- next/previous
+- queue
+- shuffle
+- repeat
+- seek
+- volume
+- quality
+- lyrics
+- album
+- artist
+- playlist
+
+Mobile:
+- viewport sekitar 390px
+- touch interaction
+- mini player
+- Now Playing
+- queue
+- search
+- scrolling
+- orientation/responsive layout
+
+3. YOUTUBE PLAYBACK
+
+Verifikasi:
+- YT.Player hanya satu instance
+- onReady bekerja
+- onStateChange bekerja
+- ENDED → next bekerja
+- BUFFERING tidak membuat state macet
+- error player ditangani
+- next/previous cepat tidak menyebabkan race
+- reload halaman tidak meninggalkan state rusak
+- membuka/menutup Now Playing tidak membuat player baru
+
+4. YOUTUBE PREMIUM
+
+Jika tersedia akun/session Premium untuk pengujian browser:
+- verifikasi player tetap berfungsi ketika user memiliki YouTube Premium
+- jangan meminta atau menyimpan credential
+- jangan mencoba mengotomatisasi login
+- jangan memalsukan status Premium
+- jangan mengubah mekanisme iklan YouTube
+
+Jika akun Premium tidak tersedia, cukup dokumentasikan bahwa pengujian Premium tidak dapat dilakukan.
+
+5. NETWORK
+
+Simulasikan bila tooling memungkinkan:
+- normal
+- koneksi lambat
+- request timeout
+- API gagal
+- browser offline lalu online kembali
+
+Pastikan:
+- tidak blank screen
+- error state jelas
+- player tidak crash
+- recovery dapat dilakukan
+
+6. CONSOLE
+
+Audit browser console:
+- uncaught exception
+- unhandled promise rejection
+- duplicate event listener
+- failed API request
+- failed asset
+- CORS error
+- iframe error
+
+Bedakan error aplikasi sendiri dengan warning/error yang berasal dari YouTube IFrame pihak ketiga.
+
+7. PERFORMANCE
+
+Audit:
+- memory leak
+- duplicate player
+- excessive API request
+- excessive DOM render
+- unnecessary reload
+- localStorage abuse
+- event listener leak
+
+Jangan menambahkan dependency besar.
+
+8. EXISTING FEATURES
+
+Regression check:
+- Home
+- Search
+- Suggestions
+- Charts
+- Moods
+- Album
+- Artist
+- Playlist
+- Related
+- Radio/autoplay
+- Queue
+- Favorites
+- History
+- Local playlist
+- Lyrics
+- SponsorBlock
+- Sleep timer
+- Playback speed
+- Quality
+- Mini Player
+- Now Playing
+- responsive UI
+- light/dark theme
+
+9. SECURITY/BASIC CONFIG
+
+Audit secara ringan:
+- tidak ada API key/secret hardcoded
+- tidak ada credential browser
+- tidak ada debug endpoint yang tidak diperlukan
+- input query ditangani dengan aman
+- tidak ada file rahasia yang ikut git
+
+Jangan melakukan security redesign besar.
+
+10. PERBAIKAN
+
+Jika menemukan bug:
+- perbaiki hanya bug yang benar-benar terverifikasi
+- jangan mengubah behavior yang sudah benar
+- setelah setiap perbaikan jalankan regression test
+
+11. FINAL TEST
+
+Jalankan:
+- node --check semua JS
+- JSON validation
+- seluruh unit test
+- seluruh frontend test
+- seluruh regression test
+- endpoint live test
+- browser/UI test
+- playback test
+
+Target:
+SEMUA PASS.
+
+12. FINAL REPORT
+
+Tampilkan:
+- browser test
+- mobile test
+- desktop test
+- playback test
+- API test
+- console result
+- performance result
+- security/basic config result
+- bug ditemukan
+- bug diperbaiki
+- file berubah
+- total test PASS/FAIL
+- status YouTube playback
+
+13. GIT
+
+Jika ada perubahan dan SEMUA test PASS:
+
+git add .
+git commit -m "test: finalize YouTube Music production audit"
+git push origin main
+
+Jika tidak ada perubahan:
+- jangan membuat empty commit
+- cukup laporkan working tree clean
+
+Setelah selesai, jangan mengerjakan Phase DirectProvider/Telegram/storage.
 
 ```
 
