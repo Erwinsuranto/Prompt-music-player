@@ -73,7 +73,122 @@
 ```
 # 
 ```
+Prompt: Phase 8B — Real Picture-in-Picture Player
 
+Di /root/music-player lanjutkan dari hasil diagnosis Phase 8.
+
+Tujuan:
+Membuat Music Player dapat dibuka sebagai floating Picture-in-Picture player ketika user keluar dari halaman, jika browser mendukung.
+
+PENTING:
+- Jangan mengubah YouTubeProvider.
+- Jangan membuat YT.Player kedua.
+- Jangan mengambil direct audio YouTube.
+- Jangan bypass DRM/iklan.
+- Jangan menggunakan scraper.
+- Jangan menambahkan storage/Telegram/downloader.
+- Gunakan player YouTube yang sudah ada.
+- Jika browser tidak mendukung PiP, fallback ke popup player existing.
+
+Audit kode existing terlebih dahulu.
+
+Diketahui project sudah memiliki:
+- startSystemPip()
+- openPipWidget()
+- Media Session
+- popup player
+
+Tugas:
+
+1. Audit implementasi PiP existing.
+2. Deteksi:
+   - documentPictureInPicture
+   - Picture-in-Picture API
+   - Media Session enterpictureinpicture
+   - browser support
+
+3. Gunakan Document Picture-in-Picture jika tersedia untuk membuat floating player HTML.
+
+4. Floating player minimal menampilkan:
+   - cover
+   - title
+   - artist
+   - play/pause
+   - previous
+   - next
+   - progress
+   - close
+
+5. Semua kontrol harus menggunakan:
+   PlaybackManager → YouTubeProvider
+
+6. Jangan membuat player YouTube baru di jendela PiP.
+   PiP hanya menjadi UI/controller.
+
+7. Sinkronkan:
+   - current song
+   - play/pause
+   - progress
+   - next/previous
+   - queue
+   - metadata
+
+8. Ketika PiP ditutup:
+   - playback tetap berjalan jika browser mengizinkan
+   - popup player existing tetap tersedia
+   - tidak membuat YT.Player baru
+
+9. Ketika kembali ke halaman:
+   - PiP ditutup sesuai behavior browser
+   - UI utama kembali sinkron
+
+10. Tambahkan fallback:
+   Jika Document PiP tidak tersedia:
+   → gunakan popup player existing.
+   Jangan tampilkan error fatal.
+
+11. Mobile Android:
+   Uji semampunya:
+   - Chrome Android
+   - Home
+   - pindah aplikasi
+   - PiP muncul/tidak
+   - kontrol play/pause
+   - next
+   - kembali ke browser
+
+12. Desktop:
+   - Chrome
+   - background tab
+   - PiP
+   - close PiP
+   - kembali ke tab
+
+13. Jangan mengklaim background audio berhasil jika belum dites pada perangkat nyata.
+
+14. Test:
+   - PiP supported
+   - PiP unsupported fallback
+   - metadata sync
+   - play/pause
+   - next/previous
+   - progress
+   - close PiP
+   - one YT.Player
+   - popup fallback
+   - existing 226+ regression tests
+
+15. Jika ada perubahan dan semua test PASS:
+   git add .
+   git commit -m "feat: add picture-in-picture player"
+   git push origin main
+
+Jika PiP tidak dapat digunakan untuk YouTube IFrame karena keterbatasan browser:
+- jangan membuat workaround ilegal;
+- laporkan limitation dengan jelas;
+- jangan commit perubahan yang tidak perlu.
+
+Tampilkan hasil real-device test secara terpisah dari unit test.
 
 ```
 # 
