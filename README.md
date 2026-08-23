@@ -1,10 +1,130 @@
 # Prompt-music-player
 
 
-# 
+
+
+# Prompt: Phase 5 — UI/UX Music Player
 ```
 
+Di repository /root/music-player, lanjutkan Phase 5: UI/UX Music Player.
 
+Tujuan:
+Merapikan dan meningkatkan pengalaman penggunaan Music Player di mobile dan desktop, tanpa merusak fitur atau arsitektur playback yang sudah stabil.
+
+PENTING:
+- Jangan mengubah YouTubeProvider secara arsitektural.
+- Jangan implement DirectProvider.
+- Jangan menambahkan Telegram, downloader, storage, database, atau authentication.
+- Jangan mengubah sumber katalog YouTube Music.
+- Playback harus tetap menggunakan PlaybackManager → YouTubeProvider.
+- Pertahankan semua fitur existing.
+
+Sebelum coding:
+1. Audit UI existing di public/index.html, public/app.js, dan public/styles.css.
+2. Jalankan baseline test terlebih dahulu.
+3. Identifikasi bagian UI yang benar-benar perlu diperbaiki.
+4. Jangan melakukan redesign total jika tidak diperlukan.
+
+Target UI:
+
+1. Mobile-first
+   - nyaman pada layar Android
+   - tidak ada horizontal overflow
+   - tombol player mudah ditekan
+   - bottom navigation/player tidak menutupi konten
+   - Now Playing nyaman digunakan dengan satu tangan
+
+2. Desktop
+   - layout tetap rapi pada layar besar
+   - sidebar dan content tidak bertabrakan
+   - player tetap mudah diakses
+
+3. Mini Player
+   - tampil saat ada lagu aktif
+   - cover, judul, artist
+   - play/pause
+   - next
+   - klik untuk membuka Now Playing
+
+4. Now Playing
+   - cover besar
+   - judul + artist
+   - progress bar
+   - elapsed/duration
+   - play/pause
+   - previous/next
+   - shuffle
+   - repeat
+   - volume
+   - quality
+   - lyrics
+   - queue
+
+5. Queue
+   - lagu aktif terlihat jelas
+   - reorder/remove tetap berfungsi
+   - queue tidak hilang ketika UI berpindah halaman
+
+6. Search
+   - search bar nyaman di mobile
+   - loading state
+   - empty state
+   - error state
+   - hasil search tetap memakai API existing
+
+7. Album / Artist / Playlist
+   - card/list responsive
+   - thumbnail tidak pecah
+   - informasi tetap terbaca pada layar kecil
+
+8. Loading/Error
+   - tambahkan state yang jelas jika API YouTube Music gagal
+   - jangan membuat error JS ketika data kosong
+   - jangan menampilkan blank screen tanpa informasi
+
+9. Accessibility dasar
+   - tombol memiliki title/aria-label yang sesuai
+   - keyboard navigation desktop tetap memungkinkan
+   - kontras teks/tombol tetap terbaca
+
+10. Performance
+   - jangan menambahkan library frontend besar tanpa alasan
+   - hindari event listener duplicate
+   - hindari render berulang yang tidak diperlukan
+   - jangan mengganggu lifecycle YT.Player
+
+Testing wajib:
+- node --check seluruh JS
+- validasi JSON
+- existing unit tests
+- frontend load test
+- endpoint baseline
+- test mobile viewport
+- test desktop viewport
+- test mini player
+- test Now Playing
+- test queue
+- test search
+- test theme light/dark jika fitur existing tetap digunakan
+- pastikan YouTube playback tetap normal
+
+Jika menemukan bug:
+- perbaiki hanya bug yang berkaitan dengan scope Phase 5.
+- jangan melakukan perubahan backend yang tidak diperlukan.
+
+Setelah selesai tampilkan:
+- file yang berubah
+- perubahan UI utama
+- hasil seluruh test
+- masalah yang ditemukan dan diperbaiki
+- status YouTube playback
+
+Jika semua test lulus:
+git add .
+git commit -m "feat: improve music player UI"
+git push origin main
+
+Jika tidak ada perubahan yang diperlukan, jangan membuat empty commit.
 ```
 
 # Prompt: Fix Facebook OAuth Domain Configuration
