@@ -78,7 +78,58 @@
 ```
 # 
 ```
+Prompt: Investigate Chrome Android Background Playback
 
+Di /root/music-player lakukan investigasi terakhir untuk masalah background playback.
+
+JANGAN mengubah code.
+JANGAN commit/push.
+
+Kondisi:
+- YouTube IFrame adalah playback provider.
+- Media Session sudah diimplementasikan.
+- Unit test lulus.
+- Android Chrome real-device background playback masih gagal.
+- Target: setelah user menekan Home, musik tetap berjalan.
+
+Audit:
+
+1. Periksa versi Chrome Android yang digunakan.
+2. Periksa apakah project sudah memiliki:
+   - manifest.json
+   - service worker
+   - PWA installability
+   - display: standalone
+   - Media Session API
+
+3. Tentukan apakah menjadikan Music Player sebagai PWA secara resmi dapat membantu background playback ketika sumber audio tetap YouTube IFrame.
+
+4. Bedakan:
+   - background tab
+   - installed PWA
+   - Picture-in-Picture
+   - screen lock
+   - Android notification/media control
+
+5. Jangan menyarankan direct audio URL YouTube.
+6. Jangan menyarankan scraper.
+7. Jangan bypass DRM/iklan.
+8. Jangan membuat audio proxy YouTube.
+
+6. Berikan hasil dengan kategori:
+
+A. Bisa diperbaiki di aplikasi
+B. Bisa dengan PWA tetapi perlu pengujian
+C. Dibatasi Chrome Android
+D. Dibatasi YouTube IFrame
+
+7. Jika ada solusi PWA yang resmi dan masuk akal, jelaskan perubahan yang diperlukan tetapi jangan implementasikan.
+
+8. Lakukan pengecekan apakah ada kode kita sendiri yang memanggil pause(), destroy(), reload(), atau menghentikan playback ketika document hidden/pagehide.
+
+9. Jangan mengubah file.
+
+Tampilkan diagnosis akhir dan rekomendasi.
 
 ```
 # 
