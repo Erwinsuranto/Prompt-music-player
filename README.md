@@ -7,9 +7,275 @@
 
 ```
 
-# 
+# Prompt: Phase 6 — Complete YouTube Music Features
 ```
+Prompt: Phase 6 — Complete YouTube Music Features
 
+Di repository /root/music-player, lanjutkan Phase 6.
+
+TUJUAN:
+Selesaikan dan poles seluruh fitur yang menggunakan YouTube Music/YouTube asli sampai production-ready.
+
+SCOPE WAJIB:
+Hanya YouTube Music + YouTube IFrame playback.
+
+JANGAN:
+- implement DirectProvider
+- implement direct audio YouTube
+- bypass iklan/DRM
+- Telegram
+- Google Drive
+- R2
+- downloader baru
+- database baru
+- authentication baru
+- mengganti sumber katalog
+- redesign besar UI
+
+DEFAULT:
+PlaybackManager → YouTubeProvider tetap menjadi playback utama.
+
+TAHAP 1 — AUDIT FITUR EXISTING
+
+Audit seluruh fitur berikut:
+
+1. Home
+2. Search
+3. Search suggestions
+4. Songs
+5. Videos
+6. Albums
+7. Artists
+8. Playlists
+9. Charts
+10. Moods/Genres
+11. Album detail
+12. Artist detail
+13. Playlist detail
+14. Related music
+15. Radio/autoplay
+16. Queue
+17. Play next
+18. Shuffle
+19. Repeat
+20. Lyrics
+21. History
+22. Favorites
+23. Local playlists
+24. Saved albums/artists/playlists
+25. Statistics
+26. SponsorBlock
+27. Playback quality
+28. Playback speed
+29. Sleep timer
+30. Picture-in-picture jika existing
+31. Mini player
+32. Now Playing
+33. Theme
+34. Mobile responsive
+35. Desktop responsive
+
+TAHAP 2 — API
+
+Audit semua endpoint yang digunakan frontend.
+
+Untuk setiap endpoint:
+- pastikan response konsisten
+- validasi parameter
+- handle empty result
+- handle YouTube API error
+- handle timeout/network failure
+- jangan membuat frontend crash
+
+Pastikan endpoint existing tetap backward compatible.
+
+TAHAP 3 — SEARCH
+
+Pastikan:
+- search normal
+- filter Songs/Videos/Albums/Artists/Playlists
+- suggestions
+- empty result
+- error state
+- hasil duplicate tidak berlebihan
+- thumbnail dan metadata benar
+- videoId/browseId benar
+
+TAHAP 4 — ALBUM/ARTIST/PLAYLIST
+
+Pastikan:
+- detail berhasil dibuka
+- metadata benar
+- track list benar
+- play all
+- shuffle
+- add to queue
+- save
+- thumbnail
+- navigation back
+- pagination/continuation jika memang digunakan
+
+TAHAP 5 — PLAYBACK
+
+Audit secara menyeluruh:
+- play
+- pause
+- resume
+- next
+- previous
+- seek
+- volume
+- speed
+- quality
+- queue
+- shuffle
+- repeat
+- autoplay/radio
+
+Pastikan hanya ada satu instance YT.Player.
+
+Pastikan tidak terjadi race condition ketika:
+- user menekan next cepat
+- user mengganti lagu saat buffering
+- lagu selesai
+- player error
+- user berpindah halaman
+- Now Playing dibuka/ditutup
+
+TAHAP 6 — LYRICS
+
+Pastikan lyrics:
+- mengambil data berdasarkan lagu yang benar
+- tidak menampilkan lyrics lagu sebelumnya
+- synced lyrics tetap sinkron
+- fallback plain lyrics tetap bekerja
+- error lyrics tidak mengganggu playback
+
+TAHAP 7 — LIBRARY
+
+Pastikan:
+- favorite
+- history
+- playlist
+- saved items
+- statistics
+
+tidak hilang atau corrupt.
+
+Pastikan localStorage error tidak menyebabkan aplikasi crash.
+
+TAHAP 8 — SPONSORBLOCK
+
+Audit integrasi SponsorBlock.
+
+Pastikan:
+- tidak mengganggu lagu normal
+- error SponsorBlock tidak menghentikan playback
+- segment salah tidak menyebabkan seek loop
+- state reset ketika lagu berubah
+
+TAHAP 9 — ERROR HANDLING
+
+Tambahkan/fix handling untuk:
+- YouTube unavailable
+- video removed
+- playback error
+- API timeout
+- API response kosong
+- thumbnail gagal
+- lyrics gagal
+- network offline
+- player initialization gagal
+
+Error harus user-friendly dan tidak menyebabkan blank screen.
+
+TAHAP 10 — PERFORMANCE
+
+Audit:
+- duplicate API request
+- duplicate event listener
+- unnecessary render
+- unnecessary player reload
+- memory leak
+- localStorage access berlebihan
+- cache yang tidak perlu
+
+Jangan menambahkan dependency besar.
+
+TAHAP 11 — TEST
+
+Jalankan seluruh test yang sudah ada.
+
+Tambahkan test hanya jika memang diperlukan untuk bug/regression yang ditemukan.
+
+Wajib:
+- node --check semua JS
+- JSON validation
+- PlaybackManager tests
+- YouTubeProvider tests
+- frontend load tests
+- endpoint tests
+- search tests
+- album/artist/playlist tests
+- queue tests
+- race-condition tests
+- lyrics tests
+- library tests
+
+Target:
+SEMUA test harus PASS.
+
+TAHAP 12 — MANUAL/HTTP VERIFICATION
+
+Test endpoint real:
+- /api/home
+- /api/search?q=test
+- /api/charts
+- /api/moods
+- /api/next
+- /api/related
+- /api/browse
+- /api/suggest
+- /api/lyrics
+- /api/sponsorblock
+- /api/resolve
+- endpoint lain yang benar-benar digunakan frontend
+
+Pastikan HTTP 200 atau error response yang memang expected.
+
+TAHAP 13 — REGRESSION
+
+Pastikan:
+- YouTube Music catalog tetap berfungsi
+- YouTube IFrame tetap berfungsi
+- PlaybackManager tetap default YouTubeProvider
+- UI mobile tetap berfungsi
+- UI desktop tetap berfungsi
+- tidak ada DirectProvider implementation
+- tidak ada Telegram/Storage/Downloader baru
+
+Jika menemukan bug, perbaiki hanya dalam scope Phase 6.
+
+SEBELUM COMMIT:
+
+Tampilkan:
+1. daftar file berubah
+2. fitur yang diperbaiki
+3. bug yang ditemukan
+4. hasil seluruh test
+5. hasil endpoint test
+6. status YouTube playback
+7. status working tree
+
+Jika SEMUA test PASS:
+git add .
+git commit -m "feat: complete YouTube Music features"
+git push origin main
+
+Jika tidak ada perubahan yang diperlukan:
+jangan membuat empty commit.
+
+JANGAN melakukan perubahan di luar scope.
 
 ```
 
