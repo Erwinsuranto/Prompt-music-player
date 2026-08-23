@@ -83,7 +83,40 @@
 ```
 # 
 ```
+Prompt: Real Android Background Playback Diagnosis
 
+Di /root/music-player, jangan ubah code dan jangan commit/push.
+
+Kita sudah mengetahui unit test Media Session PASS, tetapi Android Chrome background playback masih NOT TESTED.
+
+Tujuan:
+Cari tahu penyebab sebenarnya mengapa YouTube IFrame belum terbukti tetap berjalan ketika browser keluar dari foreground.
+
+Lakukan audit dan diagnosis saja.
+
+1. Audit YouTubeProvider dan Media Session.
+2. Pastikan Media Session benar-benar dipanggil dari top-level page.
+3. Pastikan metadata dan action handler terdaftar.
+4. Pastikan playbackState mengikuti state YT.Player.
+5. Audit visibilitychange/pagehide/pageshow.
+6. Pastikan aplikasi TIDAK memanggil pause ketika document menjadi hidden.
+7. Pastikan tidak ada reload/destroy YT.Player ketika halaman menjadi background.
+8. Audit apakah service worker/PWA diperlukan atau justru tidak relevan.
+9. Jangan membuat direct audio stream.
+10. Jangan bypass YouTube/DRM/iklan.
+11. Jangan membuat YT.Player kedua.
+
+Berikan diagnosis:
+A. Bug aplikasi yang bisa diperbaiki,
+B. keterbatasan browser,
+C. keterbatasan YouTube IFrame,
+atau
+D. belum dapat dipastikan tanpa real-device test.
+
+Jika memang bisa diperbaiki secara resmi, jelaskan perubahan yang diperlukan tetapi JANGAN implementasikan dulu.
+
+Jalankan test yang aman dan tampilkan hasilnya.
+Jangan commit/push.
 
 ```
 # Prompt: Phase 8 — Background Playback & Media Session
