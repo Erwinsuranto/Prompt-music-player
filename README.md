@@ -96,9 +96,142 @@
 
 
 ```
-# 
+# Prompt: Persistent Popup Player on Back
 ```
+Di repository /root/music-player, tambahkan fitur Persistent Popup/Mini Player.
 
+Tujuan:
+Ketika user menekan Back/kembali dari halaman Now Playing atau berpindah kembali ke halaman sebelumnya, lagu yang sedang diputar tetap berjalan dan player berubah menjadi popup/mini player yang selalu terlihat.
+
+PENTING:
+- Jangan mengubah arsitektur PlaybackManager.
+- Jangan mengubah YouTubeProvider.
+- Jangan membuat instance YT.Player kedua.
+- Gunakan player instance yang sudah aktif.
+- Jangan menghentikan playback ketika navigasi/back.
+- Jangan menambahkan DirectProvider.
+- Jangan menambahkan Telegram, storage, downloader, atau database.
+- Pertahankan semua fitur existing.
+
+BEHAVIOR:
+
+1. Jika tidak ada lagu yang sedang diputar:
+   - popup player tidak ditampilkan.
+
+2. Jika ada lagu sedang diputar:
+   - mini/popup player tetap tersedia ketika user kembali dari Now Playing.
+   - playback tetap berjalan.
+
+3. Popup player menampilkan:
+   - cover
+   - judul lagu
+   - artist
+   - play/pause
+   - next
+   - progress bar
+   - tombol untuk membuka Now Playing
+   - tombol close/hide jika memang sesuai dengan UI existing
+
+4. Ketika popup player diklik:
+   - buka kembali Now Playing.
+   - jangan membuat YT.Player baru.
+
+5. Ketika user menekan Back dari Now Playing:
+   - kembali ke halaman sebelumnya.
+   - player tetap aktif.
+   - popup player muncul.
+
+6. Ketika berpindah:
+   Home → Search → Album → Artist → Playlist
+   popup player tetap tersedia selama ada lagu aktif.
+
+7. Ketika lagu berubah:
+   - popup otomatis memperbarui cover, title, artist, duration, dan progress.
+
+8. Ketika play/pause dilakukan dari popup:
+   - state harus langsung sinkron dengan YouTubeProvider dan PlaybackManager.
+
+9. Ketika next dilakukan:
+   - gunakan queue existing.
+   - jangan membuat player baru.
+
+10. Ketika lagu selesai:
+   - ikuti behavior existing untuk repeat/autoplay/radio/queue.
+
+RESPONSIVE:
+
+Mobile:
+- popup/mini player berada di atas bottom navigation jika ada.
+- tidak menutupi tombol navigasi.
+- tinggi compact.
+- tombol mudah ditekan.
+
+Desktop:
+- gunakan mini player/popup yang rapi.
+- jangan menutupi konten utama.
+- tetap terlihat ketika user berpindah halaman.
+
+NAVIGATION:
+
+Audit cara routing/navigation existing terlebih dahulu.
+
+Jangan menggunakan location.reload() untuk membuat fitur ini.
+
+Pastikan state player tidak hilang ketika:
+- browser back
+- tombol Back UI
+- pindah halaman internal
+- membuka/menutup Now Playing
+
+LIFECYCLE:
+
+Pastikan:
+- hanya ada satu YT.Player
+- popup hanya menjadi UI/controller tambahan
+- event listener tidak duplicate
+- tidak ada memory leak
+- destroy/re-init tidak terjadi hanya karena membuka/menutup popup
+
+TEST:
+
+Tambahkan/regression test untuk:
+
+1. tidak ada lagu → popup hidden
+2. lagu aktif → popup visible
+3. Now Playing → Back → popup visible
+4. popup → Now Playing
+5. play/pause dari popup
+6. next dari popup
+7. perubahan lagu memperbarui popup
+8. queue tetap sama
+9. YT.Player tetap satu instance
+10. playback tidak berhenti ketika Back
+11. mobile viewport
+12. desktop viewport
+13. refresh behavior sesuai state existing
+
+Jalankan:
+- node --check semua JS
+- semua unit test existing
+- semua frontend test existing
+- semua regression test existing
+- test baru popup player
+- endpoint baseline
+
+Jangan melakukan perubahan yang tidak berkaitan.
+
+Jika semua test PASS:
+git add .
+git commit -m "feat: add persistent popup player"
+git push origin main
+
+Setelah selesai tampilkan:
+- file yang berubah
+- behavior popup
+- hasil test
+- konfirmasi bahwa hanya satu YT.Player digunakan
+- commit SHA
+- status git
 
 ```
 # Prompt: Phase 7 — Final YouTube Production Audit
