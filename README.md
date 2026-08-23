@@ -86,10 +86,206 @@
 
 
 ```
-# 
+# Prompt: Phase 8 — Background Playback & Media Session
 ```
 
+Prompt: Phase 8 — Background Playback & Media Session
 
+Di repository /root/music-player, lanjutkan pengembangan Music Player.
+
+TUJUAN:
+Membuat playback sebisa mungkin tetap berjalan ketika user:
+- keluar dari halaman web
+- membuka aplikasi lain
+- meminimalkan browser
+- mengunci layar
+
+dan menyediakan kontrol media native jika browser mendukung.
+
+PENTING:
+- Tetap menggunakan PlaybackManager → YouTubeProvider.
+- Tetap menggunakan YouTube IFrame Player.
+- Jangan membuat direct audio stream YouTube.
+- Jangan bypass iklan/DRM.
+- Jangan menggunakan scraper.
+- Jangan membuat YT.Player kedua.
+- Jangan mengubah sumber katalog.
+- Jangan menambahkan Telegram/storage/downloader.
+- Jangan menjanjikan background playback jika browser/YouTube memang membatasi.
+- Fallback harus tetap playback normal di foreground.
+
+TAHAP 1 — AUDIT
+
+Audit:
+1. public/player/playback-manager.js
+2. public/player/youtube-provider.js
+3. public/app.js
+4. public/index.html
+5. lifecycle YT.Player
+6. browser visibilitychange/pagehide/pageshow
+7. existing audio/media handling
+8. PWA/service worker jika ada
+
+Tentukan apakah project sudah memiliki:
+- Media Session API
+- navigator.mediaSession
+- MediaMetadata
+- media session action handlers
+- PWA manifest
+- service worker
+- Wake Lock
+- visibility handling
+
+Jangan menambahkan service worker hanya untuk memaksa audio YouTube tetap berjalan.
+
+TAHAP 2 — MEDIA SESSION
+
+Jika browser mendukung Media Session API, implementasikan integrasi dengan PlaybackManager.
+
+Set metadata:
+- title
+- artist
+- album
+- artwork
+
+Action handlers:
+- play
+- pause
+- previoustrack
+- nexttrack
+- seekbackward
+- seekforward
+- seekto
+
+Semua action harus diteruskan ke PlaybackManager → YouTubeProvider.
+
+Jangan membuat player baru.
+
+Update:
+navigator.mediaSession.playbackState
+
+menjadi:
+- playing
+- paused
+- none
+
+sesuai state player sebenarnya.
+
+TAHAP 3 — BACKGROUND/LOCK SCREEN
+
+Audit dan implementasikan lifecycle yang aman untuk:
+- visibilitychange
+- pagehide
+- pageshow
+- freeze/resume jika browser mendukung
+
+Jangan memanggil pause hanya karena document.visibilityState berubah menjadi hidden.
+
+Jika browser mengizinkan YouTube IFrame tetap berjalan di background:
+- biarkan playback berjalan.
+
+Jika browser menghentikannya:
+- jangan mencoba bypass restriction.
+- tampilkan fallback/error state yang jelas bila diperlukan.
+
+TAHAP 4 — ANDROID
+
+Optimalkan untuk:
+- Android Chrome
+- Android browser berbasis Chromium
+
+Target:
+1. Play lagu.
+2. Tekan Home.
+3. Buka aplikasi lain.
+4. Kembali ke browser.
+5. Playback state tetap sinkron.
+6. Jika browser menyediakan media notification/control, kontrol harus bekerja.
+7. Lock screen test jika browser mengizinkan.
+
+Jangan menganggap semua browser Android memiliki behavior yang sama.
+
+TAHAP 5 — DESKTOP
+
+Pastikan background tab tidak menyebabkan:
+- duplicate player
+- reload player
+- reset queue
+- reset current track
+- reset progress
+- playback state salah
+
+TAHAP 6 — MOBILE UI
+
+Pastikan ketika user kembali ke web:
+- popup player tetap sinkron
+- progress benar
+- play/pause benar
+- current song benar
+- queue tetap benar
+
+TAHAP 7 — TEST
+
+Buat test untuk:
+
+1. Media Session tersedia
+2. Media Session tidak tersedia → fallback aman
+3. metadata update
+4. play action
+5. pause action
+6. next action
+7. previous action
+8. seek action
+9. playbackState update
+10. visibility hidden
+11. visibility visible
+12. pagehide/pageshow
+13. satu YT.Player tetap digunakan
+14. queue tidak berubah
+15. popup player tetap sinkron
+16. no-song state
+17. error state
+
+Jalankan semua regression test sebelumnya.
+
+Target:
+Semua test PASS.
+
+TAHAP 8 — REAL DEVICE TEST
+
+Jika environment memungkinkan, dokumentasikan hasil:
+- Android Chrome foreground
+- Android Chrome background
+- Android Chrome lock screen
+- desktop background tab
+
+Bedakan dengan jelas:
+PASS = browser benar-benar mempertahankan playback
+LIMITATION = browser/YouTube menghentikan playback
+NOT TESTED = tidak dapat diuji
+
+Jangan mengklaim background playback berhasil jika hanya lolos unit test.
+
+TAHAP 9 — GIT
+
+Jika ada perubahan dan semua regression test PASS:
+
+git add .
+git commit -m "feat: improve background playback support"
+git push origin main
+
+Jika browser limitation membuat sebagian behavior tidak dapat dijamin, jangan membuat workaround ilegal. Laporkan limitation tersebut.
+
+Tampilkan:
+- file berubah
+- Media Session support
+- background playback result
+- lock screen result
+- Android result
+- desktop result
+- total test
+- commit SHA
+- git status
 ```
 # Prompt: Jalankan Music Player
 ```
