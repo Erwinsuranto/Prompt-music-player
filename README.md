@@ -91,9 +91,39 @@
 
 
 ```
-# 
+# Prompt: Jalankan Music Player
 ```
+Di repository /root/music-player, jalankan Music Player sekarang.
 
+Tugas:
+1. Pastikan berada di:
+   /root/music-player
+
+2. Jangan mengubah source code.
+3. Jangan membuat commit.
+4. Jangan push.
+5. Cek apakah ada proses Music Player yang sedang berjalan.
+6. Jika belum berjalan, jalankan server menggunakan:
+   npm start
+
+7. Jalankan sebagai proses background yang tetap hidup setelah terminal/AI selesai, gunakan metode yang sudah tersedia di server (misalnya nohup jika sesuai).
+
+8. Pastikan server listen pada port yang tersedia. Jangan mengambil port yang sedang digunakan service lain.
+
+9. Setelah server berjalan, lakukan test:
+   curl -I http://127.0.0.1:PORT/
+   curl http://127.0.0.1:PORT/api/home
+
+10. Tampilkan:
+   - PID server
+   - port yang digunakan
+   - status server
+   - hasil HTTP test
+   - URL yang bisa dibuka dari luar VPS berdasarkan IP VPS
+
+11. Jangan mematikan service lain yang tidak berkaitan.
+
+Jika port default project sudah dikonfigurasi, gunakan port tersebut. Jika port sedang dipakai service lain, cari port kosong dan jelaskan port yang dipilih.
 
 ```
 # Prompt: Persistent Popup Player on Back
