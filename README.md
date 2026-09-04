@@ -58,7 +58,40 @@
 ```
 # 
 ```
+Perbaiki UI halaman Library pada project Audiva Music berdasarkan screenshot yang saya berikan.
 
+JANGAN membuat ulang fitur Library dan JANGAN menghapus fungsi yang sudah ada. Fokus hanya pada perapihan layout/responsive mobile.
+
+Masalah yang harus diperbaiki:
+1. Header "Library" tetap terlihat rapi dan proporsional.
+2. Tab Playlists, Favorites, Saved, History, Stats jangan terlihat berantakan ketika lebar layar mobile sempit.
+   - Buat horizontal scroll jika diperlukan.
+   - Jangan memaksa tab turun dengan layout yang terlihat tidak rapi.
+3. Tombol "New playlist", "Import from YT Music", "Backup", dan "Restore" harus tersusun rapi.
+   - New playlist tetap menjadi tombol utama.
+   - Import dan Backup dapat berada satu baris jika ruang cukup.
+   - Restore berada di posisi yang rapi.
+   - Semua tombol harus responsive dan tidak overflow ke luar layar.
+4. Rapikan area "No playlists yet" agar spacing, icon, typography, dan alignment terlihat seperti aplikasi music streaming profesional.
+5. Kurangi ruang kosong yang tidak perlu pada halaman Library.
+6. Mini player di bagian bawah harus tetap fixed dan tidak menutupi konten Library.
+   - Pastikan ada bottom padding yang cukup agar konten terakhir tetap bisa di-scroll dan terlihat.
+7. Bottom navigation Home / Search / Charts / Your Library tetap berada di bawah dan tidak tertabrak mini player.
+8. Pertahankan tema Audiva Music yang sekarang: dark/purple gradient + accent hijau.
+9. Jangan mengubah fungsi Playlist, Favorites, Saved, History, Stats, Import, Backup, Restore, atau player.
+10. Jangan membuat halaman baru dan jangan mengubah routing.
+11. Pastikan desktop juga tetap responsive dan tidak rusak.
+12. Gunakan screenshot yang saya berikan sebagai referensi utama untuk masalah layout mobile.
+
+Setelah selesai:
+- cek seluruh halaman Library
+- jalankan build/check yang tersedia
+- pastikan tidak ada error
+- commit perubahan dengan pesan:
+  "Fix Library mobile layout"
+- push ke origin main
+
+Jangan melakukan perubahan di luar UI/layout Library yang diperlukan untuk perbaikan ini.
 
 ```
 # 
