@@ -63,7 +63,107 @@
 ```
 # 
 ```
+Tambahkan fitur Lyrics pada project Audiva Music (/root/YT-Music-Mod).
 
+TUJUAN:
+Buat tab "Lyrics" pada halaman Now Playing benar-benar berfungsi, bukan hanya tombol UI.
+
+ATURAN PENTING:
+- Jangan mengubah atau merusak layout Search / All Songs yang sudah diperbaiki.
+- Jangan mengubah player, queue, related, favorite, atau fungsi playback yang sudah berjalan kecuali benar-benar diperlukan untuk integrasi lyrics.
+- Jangan membuat ulang arsitektur aplikasi.
+- Pertahankan style UI Audiva yang sekarang.
+- Kerjakan langsung pada repository yang ada dan gunakan struktur/kode yang sudah tersedia.
+- Sebelum coding, inspect terlebih dahulu bagaimana data lagu, metadata, audio URL, Now Playing modal/page, dan routing saat ini bekerja.
+
+FITUR LYRICS:
+1. Pada Now Playing yang saat ini memiliki tab:
+   Song | Lyrics | Queue | Related
+   buat tab "Lyrics" menampilkan panel lirik ketika dipilih.
+
+2. Cari sumber data lyrics yang SUDAH tersedia di project/API yang digunakan Audiva.
+   - Periksa apakah metadata lagu/API response sudah memiliki lyrics atau synchronized lyrics.
+   - Jika sudah ada, gunakan data tersebut.
+   - Jangan menambahkan provider/API eksternal berbayar hanya untuk fitur ini.
+   - Jangan hardcode lirik lagu tertentu.
+
+3. Dukung dua jenis lirik:
+   A. Plain lyrics
+      - Tampilkan teks lirik dengan rapi.
+      - Gunakan line wrapping yang baik.
+      - Bisa discroll secara vertikal.
+   B. Timestamped/synchronized lyrics
+      - Parse timestamp per baris.
+      - Tandai baris yang sedang aktif berdasarkan currentTime audio.
+      - Saat lagu berjalan, highlight baris aktif.
+      - Auto-scroll perlahan agar baris aktif tetap terlihat.
+      - Jangan membuat auto-scroll mengganggu user ketika user sedang scroll manual.
+
+4. Sinkronisasi:
+   - Gunakan current playback time dari player yang sudah ada.
+   - Jangan membuat audio player kedua.
+   - Ketika pause, sinkronisasi berhenti.
+   - Ketika seek/forward/backward, posisi lirik harus langsung menyesuaikan.
+   - Ketika lagu berganti, lyrics harus reset dan memuat lyrics lagu baru.
+
+5. STATE:
+   - Loading: tampilkan indikator/loading sederhana.
+   - Lyrics tersedia: tampilkan lyrics.
+   - Lyrics tidak tersedia: tampilkan pesan "Lirik tidak tersedia untuk lagu ini."
+   - Error API: jangan membuat player error; tampilkan fallback yang aman.
+   - Jangan membuat layout bergeser/overflow horizontal.
+
+6. DESAIN MOBILE:
+   - Lyrics harus nyaman dibaca di layar HP.
+   - Panel lyrics menggunakan ruang yang tersedia pada Now Playing.
+   - Judul lagu/artist tetap jelas.
+   - Jangan membuat teks terlalu kecil.
+   - Jangan membuat lirik memenuhi seluruh layar jika struktur Now Playing saat ini memang menggunakan tab.
+   - Gunakan spacing dan typography yang konsisten dengan Audiva.
+   - Pastikan tidak tertutup oleh mini player atau bottom navigation.
+   - Tidak boleh ada horizontal overflow.
+
+7. DESKTOP:
+   - Pertahankan layout Now Playing desktop yang sudah ada.
+   - Lyrics panel harus memiliki max-width yang nyaman dibaca.
+   - Jangan membuat artwork atau komponen Song menjadi membesar hanya karena Lyrics.
+
+8. PERFORMANCE:
+   - Jangan request lyrics berulang setiap audio timeupdate.
+   - Lyrics cukup dimuat ketika lagu berubah atau ketika data lyrics memang belum tersedia.
+   - Gunakan cache sederhana selama sesi jika diperlukan.
+
+9. KOMPATIBILITAS:
+   - Jangan menghapus API/function existing.
+   - Jangan mengubah kontrak endpoint existing jika tidak diperlukan.
+   - Jika endpoint backend perlu diperbaiki untuk mengambil lyrics, lakukan secara modular dan tetap backward-compatible.
+
+10. VERIFIKASI:
+   Setelah implementasi:
+   - jalankan syntax/build check yang sesuai project;
+   - pastikan tidak ada JavaScript error;
+   - test lagu dengan lyrics;
+   - test lagu tanpa lyrics;
+   - test play/pause;
+   - test seek;
+   - test pindah lagu;
+   - test tab Song ↔ Lyrics ↔ Queue ↔ Related;
+   - test mobile dan desktop;
+   - pastikan Search / All Songs tetap seperti sebelumnya.
+
+JANGAN BERHENTI hanya setelah membuat UI tab Lyrics.
+Pastikan tab Lyrics benar-benar terhubung ke data lyrics dan playback time yang sudah ada.
+
+Setelah selesai, berikan ringkasan:
+- file yang diubah;
+- sumber data lyrics yang digunakan;
+- apakah synchronized lyrics berhasil didukung;
+- hasil build/test;
+- git commit hash.
+
+Lalu commit perubahan dengan pesan:
+"Add synchronized lyrics to now playing"
+dan push ke origin main.
 
 ```
 # 
